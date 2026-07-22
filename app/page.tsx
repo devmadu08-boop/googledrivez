@@ -143,7 +143,7 @@ export default function Home() {
       setProgress(100);
       setFiles((current) => [uploadedFile, ...current.filter((file) => !file.demo)]);
       setConfigured(true);
-      setNotice(`${uploadedFile.displayName} was safely encoded and saved.`);
+      setNotice(`${uploadedFile.displayName} was encoded and saved.`);
       window.setTimeout(() => setUploadOpen(false), 850);
     } catch (error) {
       setNotice(error instanceof Error ? error.message : "Upload failed.");
@@ -190,10 +190,10 @@ export default function Home() {
           <div className="storage-icon"><ShieldCheck size={19} /></div>
           <div>
             <strong>GitHub storage</strong>
-            <p>Photos are stored as encoded text files.</p>
+            <p>Photos are stored as Base64 text files.</p>
           </div>
           <div className="storage-meter"><span /></div>
-          <small>Secure repository sync</small>
+          <small>Private repository recommended</small>
         </div>
       </aside>
 
@@ -219,7 +219,7 @@ export default function Home() {
             <div>
               <p className="eyebrow"><Sparkles size={15} /> PRIVATE MEDIA VAULT</p>
               <h1>My vault</h1>
-              <p className="heading-copy">Your photos, disguised as familiar video files.</p>
+              <p className="heading-copy">Your photos, stored as text and displayed as video files.</p>
             </div>
             <button className="upload-primary" onClick={() => setUploadOpen(true)}><UploadCloud size={19} /> Upload photo</button>
           </div>
@@ -236,7 +236,7 @@ export default function Home() {
             <div className="summary-main"><div className="summary-icon"><FolderClosed size={22} /></div><div><strong>{files.length}</strong><span>Video files</span></div></div>
             <div className="summary-stat"><strong>{formatSize(files.reduce((sum, file) => sum + file.size, 0))}</strong><span>Original photo size</span></div>
             <div className="summary-stat"><strong>Text encoded</strong><span>Storage format</span></div>
-            <div className="summary-security"><ShieldCheck size={18} /><span>Repository protected</span></div>
+            <div className="summary-security"><ShieldCheck size={18} /><span>Private repo ready</span></div>
           </section>
 
           <div className="file-toolbar">
@@ -274,7 +274,7 @@ export default function Home() {
       {uploadOpen && (
         <div className="modal-backdrop" role="presentation" onMouseDown={(event) => event.target === event.currentTarget && !uploading && setUploadOpen(false)}>
           <section className="upload-modal" role="dialog" aria-modal="true" aria-labelledby="upload-title">
-            <div className="modal-heading"><div><span className="modal-kicker">SECURE CONVERSION</span><h2 id="upload-title">Upload a photo</h2><p>We’ll encode it as text and display it as a video file.</p></div><button onClick={() => setUploadOpen(false)} disabled={uploading} aria-label="Close upload"><X size={20} /></button></div>
+            <div className="modal-heading"><div><span className="modal-kicker">TEXT CONVERSION</span><h2 id="upload-title">Upload a photo</h2><p>We’ll encode it as text and display it as a video file.</p></div><button onClick={() => setUploadOpen(false)} disabled={uploading} aria-label="Close upload"><X size={20} /></button></div>
             <input ref={inputRef} type="file" accept="image/jpeg,image/png,image/webp,image/gif" onChange={onFileChange} hidden />
             <div className={`drop-zone ${dragging ? "dragging" : ""}`} onDragOver={(event) => { event.preventDefault(); setDragging(true); }} onDragLeave={() => setDragging(false)} onDrop={onDrop}>
               <div className="drop-icon"><UploadCloud size={29} /></div>
@@ -284,7 +284,7 @@ export default function Home() {
               {uploading && <div className="progress-track"><span style={{ width: `${progress}%` }} /></div>}
             </div>
             {notice && <p className="upload-notice">{notice}</p>}
-            <div className="privacy-note"><ShieldCheck size={18} /><span>Your image data is sent only to your configured GitHub repository.</span></div>
+            <div className="privacy-note"><ShieldCheck size={18} /><span>Base64 is not encryption. Always use a private GitHub repository.</span></div>
           </section>
         </div>
       )}
